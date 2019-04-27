@@ -1,0 +1,22 @@
+#page_{
+    margin: 0px auto;
+    width:100%;
+    height:50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#page_>ul>li{
+    list-style: none;
+    margin: 0 8px;
+    float: left;
+    font-size: 14px;
+    padding: 3px 10px;
+    box-shadow: 0 0 5px 1px #888;
+    cursor: pointer;
+    transition: background .3s linear;
+}
+#page_>ul>li:hover{
+    color:#fff;
+    background-color: #0c89de;
+}

@@ -1,0 +1,27 @@
+server:
+  port: 8002 #订单服务端口号
+spring:
+  application:
+    name: app-xrz-order #服务别名  服务注册到注册中心名称
+#  redis:
+#    database: 0
+#    host: 192.168.5.11
+#    port: 6379
+#    timeout: 0000
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://server1:8100/eureka #当前服务注册到eureka服务地址 （服务中心的地址）
+    register-with-eureka: true #需要将我的服务注册到eureka上
+    fetch-registry: true #需要检索服务
+
+feign:
+  hystrix:
+    enabled: true  #开启feign支持Hystrix(旧版本默认开启)
+  client:
+    config:
+      default:  #feign客户端的超时时间设置
+        connectTimeout: 2000
+        readTimeout: 2000
+
+

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!--
+        Spring管理所有业务逻辑组件
+        配置Spring扫描的包
+         use-default-filters="false":禁用默认扫描配置
+        include-filter:只扫描Controller注解（控制器）
+    -->
+    <context:component-scan base-package="cn.appsys">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--导入资源文件-->
+    <context:property-placeholder location="classpath:database.properties"/>
+
+    <!--配置C3P0数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="user" value="${user}"></property>
+        <property name="password" value="${password}"></property>
+        <property name="driverClass" value="${driver}"></property>
+        <property name="jdbcUrl" value="${url}"></property>
+    </bean>
+
+    <!--事务管理-->
+    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <!-- 开启基于注解的事务 -->
+    <tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>
+
+    <!-- 整合Mybatis -->
+
+    <!--配置SqlSessionFactoryBean-->
+    <bean  id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <!-- 指定mybatis配置文件的位置 -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+        <!--配置Mybatis映射文件的位置 -->
+        <!-- ** 代表所有包 *代表所有文件  注：如果映射文件和接口在同一目录下，可省略不写-->
+        <property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+    </bean>
+
+    <!--
+        扫描所有的mapper接口的实现，让这些mapper能够自动注入
+        base-package:指定mapper接口的包名 多个包使用逗号隔开
+     -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.appsys.dao"/>
+    </bean>
+
+    <!--使切面生效 织入：将增强处理l连接到应用程序中的类型或者对象上的过程-->
+    <aop:aspectj-autoproxy />
+    
+</beans>

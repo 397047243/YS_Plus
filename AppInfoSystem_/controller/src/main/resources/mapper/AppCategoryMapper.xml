@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper .//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.appsys.dao.appcategory.AppCategoryMapper">
+
+    <select id="getByCode" resultType="cn.appsys.pojo.AppCategory">
+        select * from app_category where categoryCode like '${categoryCode}%'
+    </select>
+
+    <select id="getByParentId" resultType="cn.appsys.pojo.AppCategory">
+        select * from app_category where parentId = #{parentId}
+    </select>
+
+    <select id="getById" resultType="string">
+        select categoryName from app_category where id = #{id}
+    </select>
+
+</mapper>

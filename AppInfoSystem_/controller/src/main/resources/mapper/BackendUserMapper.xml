@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper .//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.appsys.dao.backenduser.BackendUserMapper">
+
+    <select id="login" resultType="cn.appsys.pojo.BackendUser">
+       select *,
+	   (select valueName from data_dictionary where typeCode = "USER_TYPE" and valueId = userType) as userTypeName
+        from backend_user where userCode =  #{userCode} and userPassword = #{userPassword}
+    </select>
+</mapper>

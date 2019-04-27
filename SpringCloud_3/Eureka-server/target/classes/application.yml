@@ -1,0 +1,25 @@
+server:
+  port: 8100 # 注册中心端口号
+eureka:
+  instance:
+    hostname: 127.0.0.1 # 注册中心的IP
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+    register-with-eureka: false # 是否需要将我的服务注册到eureka上 （因为自己是注册中心，所以不需要，集群是需要为true）
+    fetch-registry: false # 是否需要检索 （因为自己是注册中心，所以不需要）
+
+# 集群环境
+#server:
+#  port: 8100
+#spring:
+#  application:
+#    name: eureka-server #集群服务名称，注意要一致
+#eureka:
+#  instance:
+#    hostname: server1
+#  client:
+#    serviceUrl:
+#      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/,http://server2:8200/eureka/
+#    register-with-eureka: true
+#    fetch-registry: true

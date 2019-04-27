@@ -1,0 +1,21 @@
+# yml文件 更简洁
+# 在写完属性之后的冒号之后要有一个空格
+# 如果父子关系，当前子属性比夫属性多两个空格
+
+#使用@Value("${name}") 注入
+username: xrz
+
+
+spring:
+  #配置Controller跳转的路径 整合JSP
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+  #整合mybatis
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?serverTimezone=UTC
+    username: root
+    password: root
+
